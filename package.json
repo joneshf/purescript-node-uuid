@@ -1,0 +1,10 @@
+{
+  "name": "purescript-node-uuid",
+  "version": "0.0.1",
+  "description": "PureScript wrapper around node-uuid",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.7.0",
+    "gulp-purescript": "0.0.8"
+  }
+}
