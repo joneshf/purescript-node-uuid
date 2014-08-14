@@ -1,17 +1,21 @@
 # Module Documentation
 
-## Module Data.UUID
+## Module Node.UUID
 
 ### Types
 
     data UUID :: *
 
-    type UUIDBuffer  = [Prim.Number]
+    type UUIDBuffer  = [Number]
 
     data UUIDEff :: !
 
 
 ### Type Class Instances
+
+    instance decodeJsonUUID :: DecodeJson UUID
+
+    instance encodeJsonUUID :: EncodeJson UUID
 
     instance eqUUID :: Eq UUID
 
@@ -22,11 +26,11 @@
 
 ### Values
 
-    parse :: Prim.String -> UUIDBuffer
+    parse :: String -> UUIDBuffer
 
     runUUID :: Eff (uuid :: UUIDEff) UUID -> UUID
 
-    showuuid :: UUID -> Prim.String
+    showuuid :: UUID -> String
 
     unparse :: UUIDBuffer -> UUID
 

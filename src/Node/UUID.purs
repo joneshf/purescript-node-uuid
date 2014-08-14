@@ -1,9 +1,12 @@
-module Data.UUID where
+module Node.UUID where
 
-  import Control.Monad.Eff
+  import Control.Monad.Eff (Eff())
 
-  import Data.Either
-  import Data.Foreign
+  import Data.Argonaut ((?>>=), encodeJson, toString)
+  import Data.Argonaut.Decode (DecodeJson)
+  import Data.Argonaut.Encode (EncodeJson)
+  import Data.Either (Either(..))
+  import Data.Foreign (ReadForeign, ForeignParser(..))
 
   foreign import uuid
     "var uuid;\
@@ -27,6 +30,16 @@ module Data.UUID where
 
   instance readUUID :: ReadForeign UUID where
     read = ForeignParser \x -> Right $ unparse $ parse $ show x
+
+  instance decodeJsonUUID :: DecodeJson UUID where
+    decodeJson json = toString json
+                 ?>>= "UUID"
+                  >>= parse
+                  >>> unparse
+                  >>> Right
+
+  instance encodeJsonUUID :: EncodeJson UUID where
+    encodeJson uuid = encodeJson $ show uuid
 
   foreign import showuuid
     "function showuuid(ident) {\
