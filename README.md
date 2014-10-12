@@ -19,7 +19,7 @@
 
     instance eqUUID :: Eq UUID
 
-    instance readUUID :: ReadForeign UUID
+    instance readUUID :: IsForeign UUID
 
     instance showUUID :: Show UUID
 

@@ -6,7 +6,8 @@ module Node.UUID where
   import Data.Argonaut.Decode (DecodeJson)
   import Data.Argonaut.Encode (EncodeJson)
   import Data.Either (Either(..))
-  import Data.Foreign (ReadForeign, ForeignParser(..))
+  import Data.Foreign (readString)
+  import Data.Foreign.Class (IsForeign)
 
   foreign import uuid
     "var uuid;\
@@ -28,8 +29,8 @@ module Node.UUID where
   instance showUUID :: Show UUID where
     show ident = showuuid ident
 
-  instance readUUID :: ReadForeign UUID where
-    read = ForeignParser \x -> Right $ unparse $ parse $ show x
+  instance readUUID :: IsForeign UUID where
+    read u = (\u' -> parse u' # unparse) <$> readString u
 
   instance decodeJsonUUID :: DecodeJson UUID where
     decodeJson json = toString json
