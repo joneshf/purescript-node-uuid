@@ -34,4 +34,4 @@ gulp.task('watch', function() {
     gulp.watch(paths.src, ['compile', 'docs']);
 });
 
-gulp.task('default', ['compile', 'docs', 'watch']);
+gulp.task('default', ['compile', 'docs']);
