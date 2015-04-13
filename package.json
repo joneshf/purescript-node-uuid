@@ -1,6 +1,6 @@
 {
   "name": "purescript-node-uuid",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "PureScript wrapper around node-uuid",
   "repository": "joneshf/purescript-node-uuid",
   "license": "MIT",
