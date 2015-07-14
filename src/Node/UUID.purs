@@ -1,5 +1,6 @@
 module Node.UUID where
 
+  import Prelude
   import Control.Monad.Eff (Eff())
 
   import Data.Argonaut ((?>>=), encodeJson, toString)
@@ -9,22 +10,14 @@ module Node.UUID where
   import Data.Foreign (readString)
   import Data.Foreign.Class (IsForeign)
 
-  foreign import uuid
-    "var uuid;\
-    \try {\
-    \  require;\
-    \  uuid = require('node-uuid');\
-    \} catch (e) {\
-    \  uuid = window.uuid;\
-    \}" :: {}
+  foreign import uuid :: {}
 
   foreign import data UUID :: *
   foreign import data UUIDEff :: !
-  type UUIDBuffer = [Number]
+  type UUIDBuffer = Array Number
 
   instance eqUUID :: Eq UUID where
-    (==) ident ident' = showuuid ident == showuuid ident'
-    (/=) ident ident' = not (ident == ident')
+    eq ident ident' = showuuid ident == showuuid ident'
 
   instance showUUID :: Show UUID where
     show ident = showuuid ident
@@ -42,32 +35,9 @@ module Node.UUID where
   instance encodeJsonUUID :: EncodeJson UUID where
     encodeJson uuid = encodeJson $ show uuid
 
-  foreign import showuuid
-    "function showuuid(ident) {\
-    \  return ident.toString();\
-    \}" :: UUID -> String
-
-  foreign import v1
-    "function v1() {\
-    \  return uuid.v1();\
-    \}" :: forall eff. Eff (uuid :: UUIDEff | eff) UUID
-
-  foreign import v4
-    "function v4() {\
-    \  return uuid.v4();\
-    \}" :: forall eff. Eff (uuid :: UUIDEff | eff) UUID
-
-  foreign import runUUID
-    "function runUUID(UUID) {\
-    \  return UUID();\
-    \}" :: Eff (uuid :: UUIDEff) UUID -> UUID
-
-  foreign import parse
-    "function parse(str) {\
-    \  return uuid.parse(str);\
-    \}" :: String -> UUIDBuffer
-
-  foreign import unparse
-    "function unparse(buffer) {\
-    \  return uuid.unparse(buffer);\
-    \}" :: UUIDBuffer -> UUID
+  foreign import showuuid :: UUID -> String
+  foreign import v1 :: forall eff. Eff (uuid :: UUIDEff | eff) UUID
+  foreign import v4 :: forall eff. Eff (uuid :: UUIDEff | eff) UUID
+  foreign import runUUID :: Eff (uuid :: UUIDEff) UUID -> UUID
+  foreign import parse :: String -> UUIDBuffer
+  foreign import unparse :: UUIDBuffer -> UUID
