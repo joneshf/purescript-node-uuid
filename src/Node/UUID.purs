@@ -9,7 +9,7 @@ module Node.UUID where
   import Data.Foreign (readString)
   import Data.Foreign.Class (IsForeign)
 
-  import Prelude (Eq, Show, (#), ($), (==), (<$>), (>>>), (>>=), show)
+  import Prelude (Ord, Eq, Show, (#), ($), (==), (<$>), (>>>), (>>=), show, compare)
 
   foreign import data UUID :: *
   foreign import data UUIDEff :: !
@@ -26,6 +26,9 @@ module Node.UUID where
 
   instance eqUUID :: Eq UUID where
     eq ident ident' = showuuid ident == showuuid ident'
+
+  instance ordUUID :: Ord UUID where
+    compare ident ident' = compare (showuuid ident) (showuuid ident')
 
   instance showUUID :: Show UUID where
     show ident = showuuid ident
