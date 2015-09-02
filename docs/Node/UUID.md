@@ -9,6 +9,7 @@ data UUID :: *
 ##### Instances
 ``` purescript
 instance eqUUID :: Eq UUID
+instance ordUUID :: Ord UUID
 instance showUUID :: Show UUID
 instance isForeignUUID :: IsForeign UUID
 instance decodeJsonUUID :: DecodeJson UUID
